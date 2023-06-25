@@ -1,0 +1,219 @@
+/* Build file HotCiv mandatory project in SWEA.
+
+  History:
+
+  Updating to Jacoco 0.8.7, Summer 2021
+
+  Updating to remove old dependency syntax and pull from MavenCentral,
+    update to Jacoco 0.8.6, Spring 2021
+
+  Converted to Gradle 6.5, Jacoco 0.8.5, and JUnit 5, Aug 2020
+
+  Converted to Gradle build system, Mar 2018
+
+   Adapted for the SWEA course, 
+     added the 'review' target, Jun 2017
+
+   Updated for hamcrest libraries, Oct 2015
+
+   This source code is from the book 
+     "Flexible, Reliable Software:
+       Using Patterns and Agile Development"
+     published 2010 by CRC Press.
+   Author: 
+     Henrik B Christensen 
+     Computer Science Department
+     Aarhus University
+   
+   This source code is provided WITHOUT ANY WARRANTY either 
+   expressed or implied. You may study, use, modify, and 
+   distribute it for non-commercial purposes. For any 
+   commercial use, see http://www.baerbak.com/
+   */
+
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
+repositories {
+    maven {
+        url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    }
+
+    maven {
+        url "https://s01.oss.sonatype.org/content/groups/staging/"
+    }
+
+    mavenCentral()
+}
+
+
+
+
+dependencies {
+    // The FRDS.Broker lib
+    implementation group: 'com.baerbak.maven',
+            name: 'broker', version: '3.0.1'
+    // Depend on the MiniDraw library
+    implementation group: 'com.baerbak.maven',
+            name: 'minidraw', version: '2.1-SNAPSHOT'
+    implementation 'junit:junit:4.12'
+
+    // Depend on JUnit 5. Require both API and Engine
+    testImplementation group: 'org.junit.jupiter',
+       name: 'junit-jupiter-api', version: '5.6.2'
+    testRuntimeOnly group: 'org.junit.jupiter',
+       name: 'junit-jupiter-engine', version: '5.6.2'
+
+    // Use the Hamcrest matcher library
+    testImplementation group: 'org.hamcrest',
+        name: 'hamcrest-library', version: '2.2'
+
+    implementation 'com.baerbak.maven:hotciv-fractal:1.0-SNAPSHOT'
+
+    // Depend on the MiniDraw library
+    implementation group: 'com.baerbak.maven',
+            name: 'minidraw', version: '2.1-SNAPSHOT'
+
+    // Depend on JUnit 5. Require both API and Engine
+    testImplementation group: 'org.junit.jupiter',
+            name: 'junit-jupiter-api', version: '5.6.2'
+    testRuntimeOnly group: 'org.junit.jupiter',
+            name: 'junit-jupiter-engine', version: '5.6.2'
+
+    // Use the Hamcrest matcher library
+    testImplementation group: 'org.hamcrest',
+            name: 'hamcrest-library', version: '2.2'
+    implementation 'junit:junit:4.12'
+    implementation 'junit:junit:4.12'
+    implementation 'junit:junit:4.12'
+}
+
+// Tell to use JUnit as testing platform
+test {
+    useJUnitPlatform()
+}
+
+// Use gradle v 6
+wrapper {
+  gradleVersion = '6.8'
+}
+
+// Use latest Jacoco test coverage tool
+jacoco {
+  toolVersion = "0.8.7"
+}
+
+
+// === Execution tasks - for running the various integration tests
+//     for manual test-driving the MiniDraw framework customization.
+
+// === Demonstrate specialized MiniDraw implementations
+
+task show(type: JavaExec) {
+    group 'SWEA HotCiv Demonstration'
+    description 'Demonstrate MapView'
+
+    main = 'hotciv.visual.ShowWorld'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task text(type: JavaExec) {
+    group 'SWEA HotCiv Demonstration'
+    description 'Demonstrate TextFigure'
+
+    main = 'hotciv.visual.ShowText'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task city(type: JavaExec) {
+    group 'SWEA HotCiv Demonstration'
+    description 'Demonstrate CityFigure'
+
+    main = 'hotciv.visual.ShowCity'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+// === Placeholders for YOUR work on solving SWEA exercises
+
+task update(type: JavaExec) {
+    group 'SWEA Mandatory'
+    description 'Test CivDrawing (partially solved)'
+
+    main = 'hotciv.visual.ShowUpdating'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task move(type: JavaExec) {
+    group 'SWEA Mandatory'
+    description 'Test UnitMoveTool'
+
+    main = 'hotciv.visual.ShowMove'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task setfocus(type: JavaExec) {
+    group 'SWEA Mandatory'
+    description 'Test SetFocusTool'
+
+    main = 'hotciv.visual.ShowSetFocus'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task turn(type: JavaExec) {
+    group 'SWEA Mandatory'
+    description 'Test EndOfTurnTool (partially solved)'
+
+    main = 'hotciv.visual.ShowEndOfTurn'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task action(type: JavaExec) {
+    group 'SWEA Mandatory'
+    description 'Test ActionTool'
+
+    main = 'hotciv.visual.ShowAction'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task comp(type: JavaExec) {
+    group 'SWEA Mandatory'
+    description 'Test CompositionTool (partially solved)'
+
+    main = 'hotciv.visual.ShowComposition'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task semi(type: JavaExec) {
+    group 'SWEA Mandatory'
+    description ' Play SemiCiv using the GUI :-)'
+
+    main = 'hotciv.visual.NotDefinedYet'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task hotcivServer(type: JavaExec){
+    group 'SWEA Distribution'
+    description 'Run HotCiv server (Socket)'
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'hotciv.broker.main.HotCivServer'
+}
+
+task hotcivStoryTest(type: JavaExec){
+    group 'SWEA Distribution'
+    description 'Run HotCiv story as MANUAL TEST (Socket)'
+
+    classpath = sourceSets.test.runtimeClasspath
+    main = 'hotciv.broker.main.HotCivManualClientTest'
+    args host
+}
+
+task hotcivClient(type:JavaExec) {
+    group "SWEA Distribution"
+    description "Runs hotciv client"
+
+    classpath= sourceSets.test.runtimeClasspath
+    main = 'hotciv.broker.main.HotcivClient'
+    args host
+}
